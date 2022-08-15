@@ -24,3 +24,21 @@ fastq-dump --split-files --gzip --skip-technical --read-filter pass --origfmt --
 mv SRR10677731.1_pass_1.fastq.gz sample2_R1.fastq.gz
 mv SRR10677731.1_pass_2.fastq.gz sample2_R2.fastq.gz
 ```
+
+### STEP 2. Perform Quality control step with FastQC and MultiQC
+
+##### Note: FastQC cannot handle paired-end data; QC must be run on R1 and R2 separately
+
+Sample 1
+```
+module load FastQC
+mkdir -p fastqc_output
+fastqc -t 2 -f fastq -o fastqc_output *.fastq.gz 1>fastqc_runtime.log 2>&1 &
+```
+
+Sample 2
+```
+module load MultiQC
+mkdir -p multiqc_output
+multiqc -o multiqc_output ./fastqc_output 1>multiqc_runtime.log 2>&1 &
+```
