@@ -42,3 +42,28 @@ module load MultiQC
 mkdir -p multiqc_output
 multiqc -o multiqc_output ./fastqc_output 1>multiqc_runtime.log 2>&1 &
 ```
+
+### STEP 3. Perform trimming and adapter removal step with cutadapt
+```
+module load cutadapt
+```
+
+Checking if FASTQ files properly paired
+```
+cutadapt -o /dev/null -p /dev/null -j 4 sample1_R1.fastq.gz sample1_R2.fastq.gz 1>checkPairing_sample1_runtime.log 2>&1 &
+cutadapt -o /dev/null -p /dev/null -j 4 sample2_R1.fastq.gz sample2_R2.fastq.gz 1>checkPairing_sample2_runtime.log 2>&1 &
+```
+
+##### Note: According to the NCBI SRA records, the Truseq standard mRNA Sample Prep Kit (Illumina) was employed for library prep. The correct adapteers, thus, are: R1: AGATCGGAAGAGCACACGTCTGAACTCCAGTCA; R2: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT; other adapater seqs: R1: AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC; R2: TGATCGTCGGACTGTAGAACTCTGAACGTGTAGA
+
+Sample 1
+```
+cutadapt -m 22 -O 4 -j 4 -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -o sample1_R1_trimmed.fastq.gz sample1_R1.fastq.gz 1>cutadapt_sample1_R1_runtime.log 2>&1 &
+cutadapt -m 22 -O 4 -j 4 -a AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT -o sample1_R2_trimmed.fastq.gz sample1_R2.fastq.gz 1>cutadapt_sample1_R2_runtime.log 2>&1 &
+```
+
+Sample 2
+```
+cutadapt -m 22 -O 4 -j 4 -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -o sample2_R1_trimmed.fastq.gz sample2_R1.fastq.gz 1>cutadapt_sample2_R1_runtime.log 2>&1 &
+cutadapt -m 22 -O 4 -j 4 -a AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT -o sample2_R2_trimmed.fastq.gz sample2_R2.fastq.gz 1>cutadapt_sample2_R2_runtime.log 2>&1 &
+```
