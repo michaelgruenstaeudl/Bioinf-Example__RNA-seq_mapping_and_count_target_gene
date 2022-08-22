@@ -100,9 +100,20 @@ STAR --runThreadN 4 \
 ```
 
 Explanations for the above command: 
-  --runThreadN: number of threads
-  --runMode: genomeGenerate mode
-  --genomeDir: /path/to/store/genome_indices
-  --genomeFastaFiles: /path/to/FASTA_file
-  --sjdbGTFfile: /path/to/GTF_file
-  --sjdbOverhang: readlength -1
+*  --runThreadN: number of threads
+*  --runMode: genomeGenerate mode
+*  --genomeDir: /path/to/store/genome_indices
+*  --genomeFastaFiles: /path/to/FASTA_file
+*  --sjdbGTFfile: /path/to/GTF_file
+*  --sjdbOverhang: readlength -1
+
+##### Perform mapping itself using the software RNA STAR
+```
+STAR --genomeDir GRCh38_chr17_index \
+  --readFilesIn sample2_R1_trimmed.fastq.gz sample2_R2_trimmed.fastq.gz \
+  --readFilesCommand zcat \
+  --outSAMtype BAM SortedByCoordinate \
+  --quantMode GeneCounts \
+  --outFileNamePrefix GRCh38_chr17_mapping/sample2_ \
+  1>STAR_mapping_sample2_runtime.log 2>&1 &
+```
