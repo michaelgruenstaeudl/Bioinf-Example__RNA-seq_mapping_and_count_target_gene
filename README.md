@@ -117,3 +117,20 @@ STAR --genomeDir GRCh38_chr17_index \
   --outFileNamePrefix GRCh38_chr17_mapping/sample2_ \
   1>STAR_mapping_sample2_runtime.log 2>&1 &
 ```
+
+
+##### Optional: Removing duplicates
+Note: The need for duplicate removal was indicated by the results of MultiQC (see above)
+
+Environmental modules needed:
+```
+module load picard
+```
+
+```
+java -jar $EBROOTPICARD/picard.jar MarkDuplicates \
+  I=input.bam \
+  O=marked_duplicates.bam \
+  M=marked_dup_metrics.txt \
+  REMOVE_DUPLICATE=true
+```
