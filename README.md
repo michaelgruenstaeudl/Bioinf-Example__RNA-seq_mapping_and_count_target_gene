@@ -52,7 +52,7 @@ Environmental modules needed:
 module load cutadapt
 ```
 
-###### Checking if FASTQ files properly paired
+##### Checking if FASTQ files properly paired
 ```
 cutadapt -o /dev/null -p /dev/null -j 4 sample1_R1.fastq.gz sample1_R2.fastq.gz 1>checkPairing_sample1_runtime.log 2>&1 &
 cutadapt -o /dev/null -p /dev/null -j 4 sample2_R1.fastq.gz sample2_R2.fastq.gz 1>checkPairing_sample2_runtime.log 2>&1 &
@@ -119,7 +119,7 @@ STAR --genomeDir GRCh38_chr17_index \
 ```
 
 
-##### Optional: Removing duplicates
+### STEP 5 (optional). Removing duplicates
 Note: The need for duplicate removal was indicated by the results of MultiQC (see above)
 
 Environmental modules needed:
@@ -133,4 +133,20 @@ java -jar $EBROOTPICARD/picard.jar MarkDuplicates \
   O=marked_duplicates.bam \
   M=marked_dup_metrics.txt \
   REMOVE_DUPLICATE=true
+```
+
+
+### STEP 6. Perform read counting with featurecount
+
+Environmental modules needed:
+```
+module load Subread
+```
+
+```
+featureCounts -T 4 -s 2 \
+  -a ../gencode.v40.annotation_chr17.gtf \
+  -o GRCh38_chr17_featurecounts.txt \
+  GRCh38_chr17_mapping/*.out.bam \
+  1>featureCounts_runtime.log 2>&1 &
 ```
