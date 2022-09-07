@@ -2,7 +2,7 @@ Bioinformatics Example: Mapping RNA-Seq data and inferring count for gene of int
 =====================================================================================
 
 ### STEP 1. Select and download RNA-Seq sequence data
-This example will be performed on two medium-sized paired-end RNA-Seq sequence data sets of human origin. Hence, I select NCBI SRA runs [SRR10677729](https://www.ncbi.nlm.nih.gov/sra/?term=SRR10677729) and [SRR10677731](https://www.ncbi.nlm.nih.gov/sra/?term=SRR10677731) as example input data. This data was selected at random and is used here only for demonstrative purposes.
+This example will be performed on two medium-sized paired-end RNA-Seq sequence data sets of human origin. I select NCBI SRA runs [SRR10677729](https://www.ncbi.nlm.nih.gov/sra/?term=SRR10677729) and [SRR10677731](https://www.ncbi.nlm.nih.gov/sra/?term=SRR10677731) as example input data. This data was selected at random and is used here for demonstrative purposes only.
 
 ##### Import the paired-end RNA-Seq samples from NCBI SRA using the [NCBI SRA-Toolkit](https://github.com/ncbi/sra-tools)
 
@@ -72,6 +72,7 @@ cutadapt -m 22 -O 4 -j 4 -a AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT -o sample2_R2_trim
 ```
 
 ### STEP 4. Perform mapping with RNA STAR
+For this example, I employ the latest genome assembly of the human genome (i.e., [GRCh38.p13](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.39/)) as well as the latest genome annotations (i.e., [Gencode Release 40](https://www.gencodegenes.org/human/release_40.html)) as references. Moreover, I only conduct the sequence mapping for one chromosome (i.e., chromosome 17) of the human genome.
 
 Environmental modules needed:
 ```
@@ -119,7 +120,7 @@ STAR --genomeDir GRCh38_chr17_index \
 ```
 
 
-### STEP 5 (optional). Removing duplicates
+### STEP 5 (optional). Removing duplicate reads
 Note: The need for duplicate removal was indicated by the results of MultiQC (see above)
 
 Environmental modules needed:
