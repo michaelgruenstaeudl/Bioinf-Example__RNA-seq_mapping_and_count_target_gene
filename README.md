@@ -151,3 +151,15 @@ featureCounts -T 4 -s 2 \
   GRCh38_chr17_mapping/*.out.bam \
   1>featureCounts_runtime.log 2>&1 &
 ```
+
+
+### STEP 7. Report the count number for a gene of interest
+Note: Genes are referred to by their Ensembl gene ID (ENSG00000xxxxxx, where x is a digit). To view those genes of the human genome that have the term 'chromosome 17' in their description, one can do a [search](https://www.ensembl.org/Homo_sapiens/Search/Results?q=chromosome17;style=table;perpage=100;page=1;facet_feature_type=Gene;facet_species=Human) on Ensembl. To view all genes of the human genome on chromomosome 17, one can do a [search](https://www.ensembl.org/biomart/martview/f5eba830720e77cb6e1f339b2f133c0b) via the Biomart interface. The gene 'BRCA1', for example, has the gene ID 'ENSG00000012048'.
+
+
+Once the gene ID of the gene of interest has been found, the actual count number can be inferred via simple grep of the read mapping results.
+
+```
+grep "ENSG00000012048" GRCh38_chr17_featurecounts.txt | awk -F'\t' '{print $NF}'
+```
+
